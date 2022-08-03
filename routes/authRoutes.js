@@ -9,4 +9,8 @@ module.exports = (app) => {
 
   // User is returning from Google OAuth with an authentication code.
   app.get('/auth/google/callback', passport.authenticate('google'));
+
+  app.get('/api/current_user', (req, res) => {
+    res.send(req.user);
+  });
 };
