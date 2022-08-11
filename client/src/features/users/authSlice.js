@@ -1,8 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from "axios";
 
 const initialState = {
   auth: {},
 };
+
+const fetchUser = createAsyncThunk({})
 
 export const authSlice = createSlice({
   name: 'auth',
