@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { ThreeDots } from 'react-loader-spinner';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   const user = useSelector((state) => state.user);
@@ -35,9 +36,12 @@ export default function Header() {
   return (
     <div className='navbar bg-primary'>
       <div className='flex-1'>
-        <a href='/' className='btn btn-ghost normal-case text-xl'>
+        <Link
+          to={authStatus ? '/surveys' : '/'}
+          className='btn btn-ghost normal-case text-xl'
+        >
           Lupin
-        </a>
+        </Link>
       </div>
       <div className='flex-none'>
         <ul className='menu menu-horizontal p-0'>
