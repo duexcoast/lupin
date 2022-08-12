@@ -22,3 +22,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </BrowserRouter>
   </Provider>
 );
+
+console.log('STRIPE KEY IS', import.meta.env.VITE_APP_STRIPE_KEY);
+console.log('Environment is ', import.meta.env.MODE);

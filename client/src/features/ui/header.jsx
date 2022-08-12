@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { ThreeDots } from 'react-loader-spinner';
 import { Link } from 'react-router-dom';
+import Payments from '../payments';
 
 export default function Header() {
   const user = useSelector((state) => state.user);
