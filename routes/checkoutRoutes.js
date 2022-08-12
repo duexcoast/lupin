@@ -3,7 +3,7 @@ const keys = require('../config/keys');
 const stripe = require('stripe')(keys.stripeSecretKey);
 
 module.exports = (app, express) => {
-  app.post('/create-checkout-session', async (req, res) => {
+  app.post('/api/create-checkout-session', async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
@@ -21,7 +21,7 @@ module.exports = (app, express) => {
   });
 
   app.post(
-    '/webhook',
+    '/api/webhook',
     express.raw({ type: 'application/json' }),
     (req, res) => {
       const sig = req.headers['stripe-signature'];

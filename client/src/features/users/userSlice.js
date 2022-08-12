@@ -12,6 +12,10 @@ export const fetchUser = createAsyncThunk('users/fetchUserStatus', async () => {
   return data;
 });
 
+export const handleStripeWebhook = createAsyncThunk('users/handleStripeWebhook', async () => {
+  const res = await axios.post('')
+})
+
 export const userSlice = createSlice({
   name: 'auth',
   initialState,
