@@ -8,7 +8,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Dashboard, SurveyNew } from '../src/app/App';
 import Landing from './features/ui/Landing';
 
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <BrowserRouter>
@@ -23,6 +22,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </BrowserRouter>
   </Provider>
 );
-
-console.log('STRIPE KEY IS', import.meta.env.VITE_APP_STRIPE_KEY);
-console.log('Environment is ', import.meta.env.MODE);

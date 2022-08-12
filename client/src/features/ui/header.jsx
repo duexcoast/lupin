@@ -22,10 +22,10 @@ export default function Header() {
         return <a href='/auth/google'>Login With Google</a>;
       default:
         return [
-          <li>
+          <li key={1}>
             <CheckoutHeader />
           </li>,
-          <li>
+          <li key={2}>
             <a href='/api/logout'>Logout</a>
           </li>,
         ];

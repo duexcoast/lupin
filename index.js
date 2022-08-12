@@ -42,7 +42,7 @@ app.use(passport.session());
 
 // initializing imported routes on the `app` instance
 authRoutes(app);
-checkoutRoutes(app);
+checkoutRoutes(app, express);
 
 const PORT = process.env.PORT || 5000;
 
