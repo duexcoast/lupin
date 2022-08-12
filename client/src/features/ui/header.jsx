@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { ThreeDots } from 'react-loader-spinner';
 import { Link } from 'react-router-dom';
-import Payments from '../payments';
+import Payments from '../payments/StripeCheckout';
 
 export default function Header() {
   const user = useSelector((state) => state.user);
@@ -19,7 +19,12 @@ export default function Header() {
       case false:
         return <a href='/auth/google'>Login With Google</a>;
       default:
-        return <a href='/api/logout'>Logout</a>;
+        return [
+          <li>
+            <Payments />
+          </li>,
+          <li><a href='/api/logout'>Logout</a></li>,
+        ];
     }
   };
   // if (authStatus === 'idle') {
@@ -46,7 +51,7 @@ export default function Header() {
       </div>
       <div className='flex-none'>
         <ul className='menu menu-horizontal p-0'>
-          <li>{renderContent()}</li>
+          {renderContent()}
         </ul>
       </div>
     </div>
