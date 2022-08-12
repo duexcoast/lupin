@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Dashboard, SurveyNew } from '../src/app/App';
 import Landing from './features/ui/Landing';
-import StripeCheckout from '../src/features/payments/StripeCheckout'
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
@@ -15,7 +15,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path='/' element={<App />}>
           <Route index element={<Landing />} />
-          <Route path='/payment' element ={<StripeCheckout />} />
           <Route path='surveys' element={<Dashboard />}>
             <Route path='new' element={<SurveyNew />} />
           </Route>

@@ -4,6 +4,7 @@ const MongoStore = require('connect-mongo');
 const session = require('express-session');
 const passport = require('passport');
 const authRoutes = require('./routes/authRoutes');
+const checkoutRoutes = require('./routes/checkoutRoutes');
 const keys = require('./config/keys');
 
 require('./models/User');
@@ -39,7 +40,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// initializing imported routes on the `app` instance
 authRoutes(app);
+checkoutRoutes(app);
 
 const PORT = process.env.PORT || 5000;
 

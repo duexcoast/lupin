@@ -1,7 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { ThreeDots } from 'react-loader-spinner';
 import { Link } from 'react-router-dom';
-import Payments from '../payments/StripeCheckout';
+
+import { useEffect } from 'react';
+import CheckoutHeader from '../payments/CheckoutHeader';
 
 export default function Header() {
   const user = useSelector((state) => state.user);
@@ -21,9 +23,11 @@ export default function Header() {
       default:
         return [
           <li>
-            <Payments />
+            <CheckoutHeader />
           </li>,
-          <li><a href='/api/logout'>Logout</a></li>,
+          <li>
+            <a href='/api/logout'>Logout</a>
+          </li>,
         ];
     }
   };
@@ -50,9 +54,7 @@ export default function Header() {
         </Link>
       </div>
       <div className='flex-none'>
-        <ul className='menu menu-horizontal p-0'>
-          {renderContent()}
-        </ul>
+        <ul className='menu menu-horizontal p-0'>{renderContent()}</ul>
       </div>
     </div>
   );

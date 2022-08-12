@@ -18,6 +18,11 @@ export default defineConfig({
         changeOrigin: false,
         secure: false,
       },
+      '/create-checkout-session': {
+        target: 'http://localhost:5000',
+        changeOrigin: false,
+        secure: false,
+      },
     },
   },
 });
