@@ -4,8 +4,9 @@ const MongoStore = require('connect-mongo');
 const session = require('express-session');
 const passport = require('passport');
 const authRoutes = require('./routes/authRoutes');
-const checkoutRoutes = require('./routes/checkoutRoutes');
+const billingRoutes = require('./routes/billingRoutes');
 const keys = require('./config/keys');
+const bodyParser = require('body-parser');
 
 require('./models/User');
 require('./services/passport');
@@ -17,6 +18,8 @@ const app = express();
 // The app.use function is used for mounting middleware functions at the specified path.
 // Since path defautls to '/', middleware mounted without a path will be executed for
 // every request to the app.
+
+// app.use(bodyParser.json());
 
 // Here we are mounting express-session to set up a cookie for passport, and using MongoStore
 // to allow us to use our mongodb as a session store for the cookies.
@@ -42,7 +45,7 @@ app.use(passport.session());
 
 // initializing imported routes on the `app` instance
 authRoutes(app);
-checkoutRoutes(app, express);
+billingRoutes(app);
 
 const PORT = process.env.PORT || 5000;
 

@@ -1,8 +1,9 @@
-const { response } = require('express');
+const { session } = require('passport');
 const keys = require('../config/keys');
 const stripe = require('stripe')(keys.stripeSecretKey);
+const bodyParser = require('body-parser');
 
-module.exports = (app, express) => {
+module.exports = (app) => {
   app.post('/api/create-checkout-session', async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       line_items: [
@@ -20,11 +21,24 @@ module.exports = (app, express) => {
     res.redirect(303, session.url);
   });
 
+  /*
+   * fulfill order function called when in webhook endpoint when
+   * order is checkout session is completed.
+   * ? Should I refactor this into a separate module?
+   *
+   */
+  const fulfillOrder = (session) => {
+    // TODO: fill me in.
+    console.log('FULFILLING ORDER FN:', session);
+  };
+
   app.post(
     '/api/webhook',
-    express.raw({ type: 'application/json' }),
+    bodyParser.json({ type: 'application/json' }),
     (req, res) => {
       const sig = req.headers['stripe-signature'];
+      const payload = req.body;
+      console.log('PAYLOAD:', payload.type, payload);
 
       let event;
 
@@ -45,13 +59,24 @@ module.exports = (app, express) => {
           const paymentIntent = event.data.object;
           //Then define and call a function to handle the event
           break;
-        // ... handle other event types
+        case 'checkout.session.completed':
+          const session = event.data.object;
+
+          // fulfill the purchase
+          fulfillOrder(session);
+
+        // TODO: ... handle other event types
         default:
           console.log(`Unhandled event type ${event.type}`);
       }
 
       // Return a 200 response to acknowledge receipt of the event
-      res.send();
+      res.status(200);
     }
   );
+
+  app.get('/api/secret', async (req, res) => {
+    const intent = await // ... Fetech or create the PaymentIntent
+    res.json({ client_secret: intent.client_secret });
+  });
 };
