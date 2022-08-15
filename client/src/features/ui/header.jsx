@@ -22,10 +22,13 @@ export default function Header() {
         return <a href='/auth/google'>Login With Google</a>;
       default:
         return [
-          <li key={1}>
+          <li key='1'>
             <CheckoutHeader />
           </li>,
-          <li key={2}>
+          <li key='2'>
+            <p>Credits: {user.auth.credits}</p>
+          </li>,
+          <li key='3'>
             <a href='/api/logout'>Logout</a>
           </li>,
         ];
