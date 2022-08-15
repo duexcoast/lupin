@@ -7,7 +7,7 @@ const requireLogin = require('../middlewares/requireLogin');
 
 const User = mongoose.model('users');
 module.exports = (app) => {
-  app.post('/api/create-checkout-session', requireLogin, async (req, res) => {
+  app.post('/api/create-checkout-session', async (req, res) => {
     const customer = await stripe.customers.create({
       metadata: {
         userId: req.user.googleId,
@@ -33,6 +33,7 @@ module.exports = (app) => {
 
   const fulfillOrder = async (userId, session) => {
     const existingUser = await User.findOne({ googleId: userId });
+    console.log(existingUser);
     existingUser.credits += 5;
     existingUser.save();
   };
