@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
-import Header from '../features/ui/Header';
+import HeaderTwo from '../features/ui/HeaderTwo';
 import { fetchUser } from '../features/users/userSlice';
 
 export const Dashboard = () => <h2>Dashboard</h2>;
@@ -19,7 +19,7 @@ function App() {
 
   return (
     <>
-      <Header />
+      <HeaderTwo />
       <Outlet />
     </>
   );
