@@ -34,17 +34,6 @@ export default function Header() {
         ];
     }
   };
-  // if (authStatus === 'idle') {
-  //   <a href='/auth/google' className='text'>
-  //     Sign In With Google
-  //   </a>;
-  // } else if (authStatus === 'loading') {
-  //   content = <ThreeDots height='30' width='30' />;
-  // } else if (authStatus === 'succeeded') {
-  //   content = user.auth.googleId;
-  // } else if (authStatus === 'failed') {
-  //   content = <div>{error}</div>;
-  // }
 
   return (
     <div className='navbar bg-primary'>
