@@ -1,15 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
+
+require('./models/User');
+require('./services/passport');
+
 const session = require('express-session');
 const passport = require('passport');
 const authRoutes = require('./routes/authRoutes');
 const billingRoutes = require('./routes/billingRoutes');
+// const billingRoutes = require('./routes/billingRoutes');
 const keys = require('./config/keys');
 const bodyParser = require('body-parser');
-
-require('./models/User');
-require('./services/passport');
 
 mongoose.connect(keys.MongoURI);
 

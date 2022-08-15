@@ -2,17 +2,26 @@ const { session } = require('passport');
 const keys = require('../config/keys');
 const stripe = require('stripe')(keys.stripeSecretKey);
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
+const User = mongoose.model('users');
 module.exports = (app) => {
   app.post('/api/create-checkout-session', async (req, res) => {
+    const customer = await stripe.customers.create({
+      metadata: {
+        userId: req.user.googleId,
+      },
+    });
+
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
           //Provide the exact price ID of the product you want to sell
-          price: 'price_1LVyuBHsCK3aU538iiDW1flA',
-          quantity: 1,
+          price: 'price_1LWP3mHsCK3aU538kmRG4vkZ',
+          quantity: 5,
         },
       ],
+      customer: customer.id,
       mode: 'payment',
       success_url: 'http://localhost:3000?success=true',
       cancel_url: 'http://localhost:3000?canceled=true',
@@ -21,24 +30,18 @@ module.exports = (app) => {
     res.redirect(303, session.url);
   });
 
-  /*
-   * fulfill order function called when in webhook endpoint when
-   * order is checkout session is completed.
-   * ? Should I refactor this into a separate module?
-   *
-   */
-  const fulfillOrder = (session) => {
-    // TODO: fill me in.
-    console.log('FULFILLING ORDER FN:', session);
+  const fulfillOrder = async (userId, session) => {
+    const existingUser = await User.findOne({ googleId: userId });
+    existingUser.credits += 5;
+    existingUser.save();
   };
 
   app.post(
     '/api/webhook',
-    bodyParser.json({ type: 'application/json' }),
-    (req, res) => {
+    bodyParser.raw({ type: 'application/json' }),
+    async (req, res) => {
       const sig = req.headers['stripe-signature'];
       const payload = req.body;
-      console.log('PAYLOAD:', payload.type, payload);
 
       let event;
 
@@ -49,34 +52,29 @@ module.exports = (app) => {
           keys.stripeWebhookSecret
         );
       } catch (err) {
+        console.log('webhook error:', err.message);
         res.status(400).send(`Webhook Error: ${err.message}`);
         return;
       }
-
       //Handle the event
       switch (event.type) {
-        case 'payment_intent.succeeded':
-          const paymentIntent = event.data.object;
-          //Then define and call a function to handle the event
-          break;
         case 'checkout.session.completed':
           const session = event.data.object;
-
-          // fulfill the purchase
-          fulfillOrder(session);
+          const {
+            metadata: { userId },
+          } = await stripe.customers.retrieve(session.customer);
+          console.log(userId);
+          fulfillOrder(userId, session);
+          break;
 
         // TODO: ... handle other event types
         default:
-          console.log(`Unhandled event type ${event.type}`);
+        // console.log(`Unhandled event type ${event.type}`);
       }
 
       // Return a 200 response to acknowledge receipt of the event
-      res.status(200);
+      // .end() is necessary here.
+      res.status(200).end();
     }
   );
-
-  app.get('/api/secret', async (req, res) => {
-    const intent = await // ... Fetech or create the PaymentIntent
-    res.json({ client_secret: intent.client_secret });
-  });
 };
