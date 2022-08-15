@@ -2,27 +2,17 @@ const { session } = require('passport');
 const keys = require('../config/keys');
 const stripe = require('stripe')(keys.stripeSecretKey);
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const requireLogin = require('../middlewares/requireLogin');
 
-const User = mongoose.model('users');
 module.exports = (app) => {
   app.post('/api/create-checkout-session', async (req, res) => {
-    const customer = await stripe.customers.create({
-      metadata: {
-        userId: req.user.googleId,
-      },
-    });
-
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
           //Provide the exact price ID of the product you want to sell
-          price: 'price_1LWP3mHsCK3aU538kmRG4vkZ',
-          quantity: 5,
+          price: 'price_1LVyuBHsCK3aU538iiDW1flA',
+          quantity: 1,
         },
       ],
-      customer: customer.id,
       mode: 'payment',
       success_url: 'http://localhost:3000?success=true',
       cancel_url: 'http://localhost:3000?canceled=true',
@@ -40,10 +30,11 @@ module.exports = (app) => {
 
   app.post(
     '/api/webhook',
-    bodyParser.raw({ type: 'application/json' }),
-    async (req, res) => {
+    bodyParser.json({ type: 'application/json' }),
+    (req, res) => {
       const sig = req.headers['stripe-signature'];
       const payload = req.body;
+      console.log('PAYLOAD:', payload.type, payload);
 
       let event;
 
@@ -54,29 +45,34 @@ module.exports = (app) => {
           keys.stripeWebhookSecret
         );
       } catch (err) {
-        console.log('webhook error:', err.message);
         res.status(400).send(`Webhook Error: ${err.message}`);
         return;
       }
+
       //Handle the event
       switch (event.type) {
+        case 'payment_intent.succeeded':
+          const paymentIntent = event.data.object;
+          //Then define and call a function to handle the event
+          break;
         case 'checkout.session.completed':
           const session = event.data.object;
-          const {
-            metadata: { userId },
-          } = await stripe.customers.retrieve(session.customer);
-          console.log(userId);
-          fulfillOrder(userId, session);
-          break;
+
+          // fulfill the purchase
+          fulfillOrder(session);
 
         // TODO: ... handle other event types
         default:
-        // console.log(`Unhandled event type ${event.type}`);
+          console.log(`Unhandled event type ${event.type}`);
       }
 
       // Return a 200 response to acknowledge receipt of the event
-      // .end() is necessary here.
-      res.status(200).end();
+      res.status(200);
     }
   );
+
+  app.get('/api/secret', async (req, res) => {
+    const intent = await // ... Fetech or create the PaymentIntent
+    res.json({ client_secret: intent.client_secret });
+  });
 };
