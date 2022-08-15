@@ -1,8 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ThreeDots } from 'react-loader-spinner';
 import { Link } from 'react-router-dom';
-
-import { useEffect } from 'react';
 import CheckoutHeader from '../payments/CheckoutHeader';
 
 export default function Header() {

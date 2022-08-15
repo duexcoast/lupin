@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
-// import Header from '../features/ui/Header.jsx';
-import Header from '../features/ui/HeaderTwo';
+import Header from '../features/ui/Header';
+// import Header from '../features/ui/HeaderTwo';
 import { fetchUser } from '../features/users/userSlice';
 
 export const Dashboard = () => <h2>Dashboard</h2>;
