@@ -20,7 +20,7 @@ function App() {
 
   return (
     <>
-      <CheckoutHeader />
+      <Header />
       <Outlet />
     </>
   );
