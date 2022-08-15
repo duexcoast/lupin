@@ -3,10 +3,11 @@ const keys = require('../config/keys');
 const stripe = require('stripe')(keys.stripeSecretKey);
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const requireLogin = require('../middlewares/requireLogin');
 
 const User = mongoose.model('users');
 module.exports = (app) => {
-  app.post('/api/create-checkout-session', async (req, res) => {
+  app.post('/api/create-checkout-session', requireLogin, async (req, res) => {
     const customer = await stripe.customers.create({
       metadata: {
         userId: req.user.googleId,
