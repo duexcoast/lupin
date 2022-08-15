@@ -2,17 +2,27 @@ const { session } = require('passport');
 const keys = require('../config/keys');
 const stripe = require('stripe')(keys.stripeSecretKey);
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const User = mongoose.model('users');
 
 module.exports = (app) => {
   app.post('/api/create-checkout-session', async (req, res) => {
+    const customer = await stripe.customers.create({
+      metadata: {
+        userId: req.user.googleId,
+      },
+    });
+
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
           //Provide the exact price ID of the product you want to sell
-          price: 'price_1LVyuBHsCK3aU538iiDW1flA',
-          quantity: 1,
+          price: 'price_1LWP3mHsCK3aU538kmRG4vkZ',
+          quantity: 5,
         },
       ],
+      customer: customer.id,
       mode: 'payment',
       success_url: 'http://localhost:3000?success=true',
       cancel_url: 'http://localhost:3000?canceled=true',
@@ -23,18 +33,18 @@ module.exports = (app) => {
 
   const fulfillOrder = async (userId, session) => {
     const existingUser = await User.findOne({ googleId: userId });
-    console.log(existingUser);
+
     existingUser.credits += 5;
     existingUser.save();
   };
 
   app.post(
     '/api/webhook',
-    bodyParser.json({ type: 'application/json' }),
-    (req, res) => {
+    bodyParser.raw({ type: 'application/json' }),
+    async (req, res) => {
       const sig = req.headers['stripe-signature'];
       const payload = req.body;
-      console.log('PAYLOAD:', payload.type, payload);
+      console.log('PAYLOAD:', payload.type);
 
       let event;
 
@@ -57,11 +67,17 @@ module.exports = (app) => {
           break;
         case 'checkout.session.completed':
           const session = event.data.object;
+          console.log('The checkout session is completed');
 
-          // fulfill the purchase
-          fulfillOrder(session);
+          // retrieve the customer meta data, which has the googleId
+          const {
+            metadata: { userId },
+          } = await stripe.customers.retrieve(session.customer);
 
-        // TODO: ... handle other event types
+          fulfillOrder(userId, session);
+
+          break;
+
         default:
           console.log(`Unhandled event type ${event.type}`);
       }
