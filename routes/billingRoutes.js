@@ -83,7 +83,7 @@ module.exports = (app) => {
       }
 
       // Return a 200 response to acknowledge receipt of the event
-      res.status(200);
+      res.status(200).end();
     }
   );
 
