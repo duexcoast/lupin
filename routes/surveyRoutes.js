@@ -1,5 +1,7 @@
+const requireLogin = require('../middlewares/requireLogin');
+
 module.exports = (app) => {
-  app.get('/api/surveys', (req, res) => {
+  app.get('/api/surveys', requireLogin, (req, res) => {
     //
   });
 
