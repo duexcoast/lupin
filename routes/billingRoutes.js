@@ -19,7 +19,7 @@ module.exports = (app) => {
         {
           //Provide the exact price ID of the product you want to sell
           price: 'price_1LWP3mHsCK3aU538kmRG4vkZ',
-          quantity: 5,
+          quantity: 1,
         },
       ],
       customer: customer.id,
