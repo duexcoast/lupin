@@ -44,7 +44,7 @@ module.exports = (app) => {
   };
 
   app.post(
-    '/api/webhook',
+    '/api/billing/webhook',
     bodyParser.raw({ type: 'application/json' }),
     async (req, res) => {
       const sig = req.headers['stripe-signature'];
