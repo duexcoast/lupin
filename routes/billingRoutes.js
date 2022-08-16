@@ -8,6 +8,11 @@ const User = mongoose.model('users');
 
 module.exports = (app) => {
   app.post('/api/create-checkout-session', async (req, res) => {
+    const redirectURL =
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3000'
+        : 'https://shielded-cove-41261.herokuapp.com/';
+
     const customer = await stripe.customers.create({
       metadata: {
         userId: req.user.googleId,
@@ -24,8 +29,8 @@ module.exports = (app) => {
       ],
       customer: customer.id,
       mode: 'payment',
-      success_url: 'http://localhost:3000?success=true',
-      cancel_url: 'http://localhost:3000?canceled=true',
+      success_url: redirectURL + '?status=success',
+      cancel_url: redirectURL + '?status=cancel',
     });
 
     res.redirect(303, session.url);

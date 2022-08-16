@@ -9,11 +9,11 @@ export default function CheckoutHeader() {
     //check to see if this is a rediect back from checkout
     const query = new URLSearchParams(window.location.search);
 
-    if (query.get('success')) {
+    if (query.get('status') === 'success') {
       setMessage('Order placed!');
     }
 
-    if (query.get('canceled')) {
+    if (query.get('status') === 'cancel') {
       setMessage('Order canceled.');
     }
   }, []);
