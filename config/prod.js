@@ -9,4 +9,5 @@ module.exports = {
   stripeSecretKey: process.env.STRIPE_SECRET_KEY,
   stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
   sendGridKey: process.env.SENDGRID_KEY,
+  redirectURL: process.env.REDIRECT_URL,
 };

@@ -3,11 +3,11 @@ const keys = require('../config/keys');
 
 sgMail.setApiKey(keys.sendGridKey);
 
-module.exports = async (survey, template) => {
+module.exports = async ({ subject, recipients }, template) => {
   const msg = {
-    to: survey.recipients,
-    from: 'conor.ux@gmail.com',
-    subject: survey.subject,
+    personalizations: recipients.map((email) => ({ to: [email] })),
+    from: 'duex.coast@gmail.com',
+    subject: subject,
     html: template,
     trackingSettings: {
       clickTracking: {
@@ -19,6 +19,7 @@ module.exports = async (survey, template) => {
   try {
     const result = await sgMail.send(msg);
     console.log(result);
+    return result;
   } catch (err) {
     console.log(err);
     if (err.response) {

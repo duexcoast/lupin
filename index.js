@@ -3,12 +3,14 @@ const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 
 require('./models/User');
+require('./models/Survey');
 require('./services/passport');
 
 const session = require('express-session');
 const passport = require('passport');
 const authRoutes = require('./routes/authRoutes');
 const billingRoutes = require('./routes/billingRoutes');
+const surveyRoutes = require('./routes/surveyRoutes');
 const keys = require('./config/keys');
 const bodyParser = require('body-parser');
 
@@ -24,6 +26,7 @@ const app = express();
 
 // Here we are mounting express-session to set up a cookie for passport, and using MongoStore
 // to allow us to use our mongodb as a session store for the cookies.
+app.use(bodyParser.json());
 app.use(
   session({
     secret: [keys.cookieKey],
@@ -45,6 +48,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // initializing imported routes on the `app` instance
+surveyRoutes(app);
 authRoutes(app);
 billingRoutes(app);
 

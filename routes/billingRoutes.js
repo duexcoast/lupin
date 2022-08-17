@@ -29,8 +29,8 @@ module.exports = (app) => {
       ],
       customer: customer.id,
       mode: 'payment',
-      success_url: redirectURL + '?status=success',
-      cancel_url: redirectURL + '?status=cancel',
+      success_url: keys.redirectURL + '?status=success',
+      cancel_url: keys.redirectURL + '?status=cancel',
     });
 
     res.redirect(303, session.url);
