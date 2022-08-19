@@ -1,12 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  formValues: {},
+  formValues: null,
 };
 
-export const submitSurvey = createAsyncThunk(
-  '/api/surveys'
-)
+export const submitSurvey = createAsyncThunk('/api/surveys');
 export const surveyFormSlice = createSlice({
   name: 'surveyForm',
   initialState,
