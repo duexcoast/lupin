@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SurveyForm from './SurveyForm';
 import SurveyFormReview from './surveyFormReview';
-import { surveyForm } from './surveyFormSlice';
+import { surveyFormValue } from './surveyFormSlice';
 
 export default function SurveyNew() {
   const [showReviewForm, setShowReviewForm] = useState(false);
@@ -13,7 +13,7 @@ export default function SurveyNew() {
   const { formData } = useSelector((state) => state.surveyFormData);
 
   useEffect(() => {
-    dispatch(surveyForm(null));
+    dispatch(surveyFormValue(null));
   }, []);
 
   const renderContent = () => {

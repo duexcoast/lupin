@@ -23,7 +23,7 @@ export const surveyFormSlice = createSlice({
   name: 'surveyForm',
   initialState,
   reducers: {
-    surveyForm: (state, action) => {
+    surveyFormValue: (state, action) => {
       state.formValues = action.payload;
     },
   },
@@ -37,5 +37,5 @@ export const surveyFormSlice = createSlice({
   },
 });
 
-export const { surveyForm } = surveyFormSlice.actions;
+export const { surveyFormValue } = surveyFormSlice.actions;
 export default surveyFormSlice.reducer;

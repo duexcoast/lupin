@@ -1,11 +1,9 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import SurveyField from './surveyField';
 import { schema } from './validationSchema';
 import { useSelector, useDispatch } from 'react-redux';
-import { surveyForm } from './surveyFormSlice';
+import { surveyFormValue } from './surveyFormSlice';
 
 export default function SurveyForm({ onSurveySubmit }) {
   // redux
@@ -52,7 +50,7 @@ export default function SurveyForm({ onSurveySubmit }) {
 
   const onSubmit = (data) => {
     onSurveySubmit();
-    dispatch(surveyForm(data));
+    dispatch(surveyFormValue(data));
   };
   return (
     <div className='card w-96 bg-base-100 text-neutral-content shadow-xl'>

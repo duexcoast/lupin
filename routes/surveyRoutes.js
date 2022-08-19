@@ -25,7 +25,7 @@ module.exports = (app) => {
       //   email: email.trim(),
       // })),
       recipients: recipients.map((email) => ({
-        email: email.trim()
+        email: email.trim(),
       })),
       _user: req.user.id,
       dateSent: Date.now(),
@@ -45,6 +45,7 @@ module.exports = (app) => {
 
   // record feedback from a user
   app.post('/api/surveys/webhook', (req, res) => {
-    //
+    console.log(req.body);
+    res.send({});
   });
 };

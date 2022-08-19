@@ -18,7 +18,9 @@ export default function SurveyFormReview({ onCancel }) {
     try {
       dispatch(submitSurvey(formValues));
       navigate('/surveys');
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
