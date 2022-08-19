@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import SurveyFormReview from './SurveyFormReview';
 import SurveyForm from './SurveyForm';
-import SurveyFormReview from './surveyFormReview';
 import { surveyFormValue } from './surveyFormSlice';
 
 export default function SurveyNew() {
