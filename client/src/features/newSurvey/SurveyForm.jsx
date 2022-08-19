@@ -4,8 +4,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import SurveyField from './surveyField';
 import { schema } from './validationSchema';
+import { useSelector, useDispatch } from 'react-redux';
+import { surveyForm } from './surveyFormSlice';
 
-export default function SurveyForm() {
+
+export default function SurveyForm({ onSurveySubmit }) {
+  // redux
+  const surveyFormData = useSelector((state) => state.surveyFormData);
+  const dispatch = useDispatch();
+
   // use-hook-form config
   const {
     register,
@@ -28,6 +35,7 @@ export default function SurveyForm() {
       return '';
     }
   };
+
   // separate helper for rendering email error
   const renderEmailError = () => {
     const emailErrors = [];
@@ -43,7 +51,10 @@ export default function SurveyForm() {
     }
   };
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    onSurveySubmit();
+    dispatch(surveyForm(data));
+  };
   return (
     <div className='card w-96 bg-base-100 text-neutral-content shadow-xl'>
       <div className='card-body items-center text-center'>
