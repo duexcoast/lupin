@@ -2,15 +2,23 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { submitSurvey } from './surveyFormSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function SurveyFormReview({ onCancel }) {
+  // redux
   const { formValues } = useSelector((state) => state.surveyFormData);
   const dispatch = useDispatch();
 
-  const onSubmitHandler = (e, formValues) => {
+  // react-router
+  const navigate = useNavigate();
+
+  const onSubmitHandler = async (e, formValues) => {
     e.preventDefault();
     console.log('submitted');
-    dispatch(submitSurvey(formValues));
+    try {
+      dispatch(submitSurvey(formValues));
+      navigate('/surveys');
+    } catch (err) {}
   };
 
   return (
