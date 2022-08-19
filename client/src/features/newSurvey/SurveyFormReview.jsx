@@ -5,11 +5,12 @@ import { submitSurvey } from './surveyFormSlice';
 
 export default function SurveyFormReview({ onCancel }) {
   const { formValues } = useSelector((state) => state.surveyFormData);
-  console.log(formValues);
+  const dispatch = useDispatch();
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = (e, formValues) => {
     e.preventDefault();
-    submitSurvey(formValues);
+    console.log('submitted');
+    dispatch(submitSurvey(formValues));
   };
 
   return (
@@ -24,66 +25,64 @@ export default function SurveyFormReview({ onCancel }) {
           </h2>
 
           <div className='form-control w-full max-w-xs'>
-            <label htmlFor='surveyTitle' className='label'>
+            <label htmlFor='title' className='label'>
               <span className='label-text'>Survey Title:</span>
             </label>
             <p
-              id='surveyTitle'
+              id='title'
               type='text'
               className='w-full max-w-xs text-neutral text-left'
             >
-              {formValues.surveyTitle}
+              {formValues.title}
             </p>
           </div>
           <div className='form-control w-full max-w-xs'>
-            <label htmlFor='surveySubject' className='label'>
+            <label htmlFor='subject' className='label'>
               <span className='label-text'>Subject Line:</span>
             </label>
             <p
-              id='surveySubject'
+              id='subject'
               type='text'
               className='w-full max-w-xs text-neutral text-left'
             >
-              {formValues.surveySubject}
+              {formValues.subject}
             </p>
           </div>
           <div className='form-control w-full max-w-xs'>
-            <label htmlFor='surveyQuestion' className='label'>
+            <label htmlFor='body' className='label'>
               <span className='label-text'>Survey Question:</span>
             </label>
             <p
-              id='surveyQuestion'
+              id='body'
               type='text'
               className='w-full max-w-xs text-neutral text-left'
             >
-              {formValues.surveyQuestion}
+              {formValues.body}
             </p>
           </div>
           <div className='form-control w-full max-w-xs'>
-            <label htmlFor='recipientList' className='label'>
+            <label htmlFor='recipients' className='label'>
               <span className='label-text'>Recipient List</span>
             </label>
             <p
-              id='recipientList'
+              id='recipients'
               type='text'
               className='w-full max-w-xs text-neutral text-left'
             >
-              {formValues.recipientList}
+              {formValues.recipients}
             </p>
           </div>
 
           <div className='flex gap-4 justify-center'>
-            <input
-              value='back'
-              className='btn btn-outline btn-accent'
-              type='button'
-              onClick={onCancel}
-            />
-            <input
-              value='confirm'
+            <button className='btn btn-outline btn-accent' onClick={onCancel}>
+              Cancel
+            </button>
+            <button
               className='btn btn-outline btn-primary'
-              type='submit'
-            />
+              onClick={(e) => onSubmitHandler(e, formValues)}
+            >
+              Submit
+            </button>
           </div>
         </form>
       </div>

@@ -7,7 +7,7 @@ export default function Dashboard() {
       Dashboard
       <div>
         <Link to='/surveys/new'>
-          <button class='btn btn-lg btn-primary absolute bottom-12 right-12'>
+          <button className='btn btn-lg btn-primary absolute bottom-12 right-12'>
             Add Survey
           </button>
         </Link>

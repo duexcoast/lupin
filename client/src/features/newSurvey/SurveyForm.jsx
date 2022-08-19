@@ -7,7 +7,6 @@ import { schema } from './validationSchema';
 import { useSelector, useDispatch } from 'react-redux';
 import { surveyForm } from './surveyFormSlice';
 
-
 export default function SurveyForm({ onSurveySubmit }) {
   // redux
   const surveyFormData = useSelector((state) => state.surveyFormData);
@@ -65,81 +64,75 @@ export default function SurveyForm({ onSurveySubmit }) {
           <h2 className='card-title text-neutral'>Create a Survey</h2>
 
           <div className='form-control w-full max-w-xs'>
-            <label htmlFor='surveyTitle' className='label'>
+            <label htmlFor='title' className='label'>
               <span className='label-text'>Survey Title:</span>
             </label>
             <input
-              id='surveyTitle'
+              id='title'
               type='text'
               placeholder='Subject Title'
-              {...register('surveyTitle')}
+              {...register('title')}
               className={`input input-bordered ${
-                errors.surveyTitle ? 'input-error' : 'input-primary'
+                errors.title ? 'input-error' : 'input-primary'
               } w-full max-w-xs`}
             />
             <label className='label'>
-              <span className='label-text-alt'>
-                {renderError('surveyTitle')}
-              </span>
+              <span className='label-text-alt'>{renderError('title')}</span>
             </label>
           </div>
 
           <div className='form-control w-full max-w-xs'>
-            <label htmlFor='surveySubject' className='label'>
+            <label htmlFor='subject' className='label'>
               <span className='label-text'>Subject Line:</span>
             </label>
             <input
-              id='surveySubject'
+              id='subject'
               type='text'
               placeholder='Subject Line'
-              {...register('surveySubject')}
+              {...register('subject')}
               className={`input input-bordered ${
-                errors.surveySubject ? 'input-error' : 'input-primary'
+                errors.subject ? 'input-error' : 'input-primary'
               } w-full max-w-xs`}
             />
             <label className='label'>
-              <span className='label-text-alt'>
-                {renderError('surveySubject')}
-              </span>
+              <span className='label-text-alt'>{renderError('subject')}</span>
             </label>
           </div>
 
           <div className='form-control w-full max-w-xs'>
-            <label htmlFor='surveyQuestion' className='label'>
+            <label htmlFor='body' className='label'>
               <span className='label-text'>Survey Question:</span>
             </label>
             <input
-              id='surveyQuestion'
+              id='body'
               type='text'
               placeholder='Survey Question'
-              {...register('surveyQuestion')}
+              {...register('body')}
               className={`input input-bordered ${
-                errors.surveyQuestion ? 'input-error' : 'input-primary'
+                errors.body ? 'input-error' : 'input-primary'
               } w-full max-w-xs`}
             />
             <label className='label'>
-              <span className='label-text-alt'>
-                {renderError('surveyQuestion')}
-              </span>
+              <span className='label-text-alt'>{renderError('body')}</span>
             </label>
           </div>
 
           <div className='form-control w-full max-w-xs'>
-            <label htmlFor='recipientList' className='label'>
+            <label htmlFor='recipients' className='label'>
               <span className='label-text'>Recipient List:</span>
             </label>
             <input
-              id='recipientList'
+              id='recipients'
               type='text'
               placeholder='Recipient List'
-              {...register('recipientList')}
+              {...register('recipients')}
               className={`input input-bordered ${
-                errors.recipientList ? 'input-error' : 'input-primary'
+                errors.recipients ? 'input-error' : 'input-primary'
               } w-full max-w-xs`}
             />
             <label className='label'>
               <span className='label-text-alt'>
-                {renderEmailError('recipientList')}
+                {renderEmailError('recipients')}
               </span>
             </label>
           </div>

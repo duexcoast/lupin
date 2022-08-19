@@ -1,16 +1,16 @@
 import * as yup from 'yup';
 
 export const schema = yup.object().shape({
-  surveyTitle: yup
+  title: yup
     .string('Please use your words.')
     .required('A survey title is required.'),
-  surveySubject: yup
+  subject: yup
     .string('Please use your words.')
     .required('An email subject is required.'),
-  surveyQuestion: yup
+  body: yup
     .string('You need to enter a question here.')
     .required('A survey question is required.'),
-  recipientList: yup
+  recipients: yup
     .array()
     .transform(function (value, originalValue) {
       if (this.isType(value) && value !== null) {

@@ -13,7 +13,7 @@ export default function SurveyNew() {
   const { formData } = useSelector((state) => state.surveyFormData);
 
   useEffect(() => {
-    return dispatch(surveyForm(null));
+    dispatch(surveyForm(null));
   }, []);
 
   const renderContent = () => {
