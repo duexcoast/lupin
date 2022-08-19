@@ -18,7 +18,7 @@ export default function SurveyFormReview({ onCancel }) {
       <div className='card-body items-center text-center'>
         <form
           className='flex flex-col w-full text-neutra gap-4'
-          onSubmit={onSubmitHandler}g
+          onSubmit={onSubmitHandler}
         >
           <h2 className='card-title text-neutral'>
             Please Confirm Your Survey
