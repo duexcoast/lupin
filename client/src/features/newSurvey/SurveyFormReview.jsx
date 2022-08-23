@@ -79,7 +79,7 @@ export default function SurveyFormReview({ onCancel }) {
               type='text'
               className='w-full max-w-xs text-neutral text-left'
             >
-              {formValues.recipients}
+              {formValues.recipients.toString()}
             </p>
           </div>
 

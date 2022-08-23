@@ -22,6 +22,7 @@ export default function SurveyNew() {
     }
     return <SurveyForm onSurveySubmit={() => setShowReviewForm(true)} />;
   };
+
   return (
     <div className='flex items-center justify-center h-screen'>
       {renderContent()}

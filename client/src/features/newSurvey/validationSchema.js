@@ -16,7 +16,7 @@ export const schema = yup.object().shape({
       if (this.isType(value) && value !== null) {
         return value.flatMap((emails) => emails.split(/[\s,]+/));
       }
-      return originalValue ? originalValue.split(/[\s,]/) : [];
+      return originalValue ? originalValue.split(/[\s,]+/) : [];
     })
     .of(yup.string().email(({ value }) => `${value} is not a valid email`))
     .required(''),
